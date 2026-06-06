@@ -203,4 +203,3 @@ If you use this code or checkpoint, please cite:
 - The checkpoint is hosted on Hugging Face and is not stored in this GitHub repository.
 - AS-Norm analysis is not enabled in the default release entry point.
 - This release keeps several legacy ECAPA-TDNN names for compatibility. See `docs/public_api.md` for cleaner public aliases.
-- The model and code are released for research use. Fairness behavior may vary across datasets, demographic distributions, acoustic conditions, and operating thresholds.
