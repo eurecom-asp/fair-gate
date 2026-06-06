@@ -1,36 +1,36 @@
+<div align="center">
+
 # Fair-Gate
 
-Official implementation of **Fair-Gate: Fairness-Aware Interpretable Risk Gating for Sex-Fair Voice Biometrics**.
+### Fairness-Aware Interpretable Risk Gating for Sex-Fair Voice Biometrics
 
-Fair-Gate is a fairness-aware automatic speaker verification (ASV) framework built on an ECAPA-TDNN backbone. It introduces a complementary gating mechanism that separates speaker-discriminative identity information from sex-related variation, and uses branch-specific training objectives to reduce sex-linked error disparities under a shared operating threshold.
+[![arXiv](https://img.shields.io/badge/arXiv-2603.11360-b31b1b.svg)](https://arxiv.org/abs/2603.11360)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Checkpoint-yellow)](https://huggingface.co/Cody9517/fairgate-ecapa-voxceleb)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Paper: [Fair-Gate: Fairness-Aware Interpretable Risk Gating for Sex-Fair Voice Biometrics](https://arxiv.org/abs/2603.11360)  
-Pretrained checkpoint: [Cody9517/fairgate-ecapa-voxceleb](https://huggingface.co/Cody9517/fairgate-ecapa-voxceleb)
+**Official implementation of Fair-Gate for sex-fair automatic speaker verification.**
+
+</div>
 
 ---
 
 ## Overview
 
-This repository provides code for:
+**Fair-Gate** is a fairness-aware automatic speaker verification (ASV) framework built on an ECAPA-TDNN backbone. It addresses sex-linked performance gaps by using a complementary gating mechanism that routes intermediate representations into an identity branch and a sex-sensitive branch.
 
-- ECAPA-TDNN based speaker verification;
-- Fair-Gate complementary identity/sensitive feature routing;
-- capacity and saturation regularization for gate control;
-- sex supervision on the sensitive branch;
-- adversarial sex removal from the identity branch;
-- optional decorrelation and Risk Extrapolation regularization;
-- VoxCeleb1-O/E/H evaluation;
-- sex-disaggregated FMR/FNMR analysis;
-- GARBE fairness evaluation at a fixed global operating point.
+The method is designed to improve the utility--fairness trade-off under a shared decision threshold, with evaluation on VoxCeleb1-O/E/H using both overall verification metrics and sex-disaggregated error metrics.
 
-The released checkpoint corresponds to the final **r=0.05** Fair-Gate configuration used for the main evaluation.
+Paper: **[Fair-Gate: Fairness-Aware Interpretable Risk Gating for Sex-Fair Voice Biometrics](https://arxiv.org/abs/2603.11360)**  
+Checkpoint: **[Cody9517/fairgate-ecapa-voxceleb](https://huggingface.co/Cody9517/fairgate-ecapa-voxceleb)**
 
 ---
 
-## Repository structure
+## Repository Structure
 
 ```text
-fair-gate/
+.
 ├── train.py                         # Main training/evaluation entry
 ├── fairgate/                        # Core model, losses, dataloader, metrics
 ├── configs/                         # Configuration and selected hyperparameters
@@ -49,6 +49,20 @@ fair-gate/
 
 ---
 
+## Main Components
+
+| Component | Argument | Description |
+|---|---|---|
+| Cap | `--lambda_css_cap` | Capacity regularization for complementary gating |
+| Sat | `--lambda_css_sat` | Gate saturation regularization |
+| Gs | `--lambda_gender_s` | Sex supervision on the sensitive branch |
+| Adv | `--lambda_gender_adv` | Adversarial sex removal from the identity branch |
+| Dec | `--lambda_decor` | Decorrelation between identity and sensitive branches |
+| REx | `--lambda_rex` | Risk Extrapolation penalty across sex groups |
+| r | `--css_target_ratio` | Target ratio for the sensitive branch |
+
+---
+
 ## Installation
 
 ```bash
@@ -60,9 +74,9 @@ pip install -r requirements.txt
 
 ---
 
-## Download the pretrained checkpoint
+## Download the Pretrained Checkpoint
 
-The pretrained Fair-Gate checkpoint is hosted on Hugging Face:
+The pretrained Fair-Gate checkpoint is hosted on Hugging Face.
 
 ```bash
 mkdir -p checkpoints
@@ -72,7 +86,7 @@ huggingface-cli download Cody9517/fairgate-ecapa-voxceleb \
   --local-dir checkpoints/
 ```
 
-The checkpoint was selected from the `r=0.05` configuration:
+The released checkpoint corresponds to the final `r=0.05` configuration:
 
 ```text
 --css_target_ratio 0.05
@@ -86,7 +100,7 @@ The checkpoint was selected from the `r=0.05` configuration:
 
 ---
 
-## Data preparation
+## Data Preparation
 
 Prepare the following files before evaluation:
 
@@ -94,7 +108,7 @@ Prepare the following files before evaluation:
 2. VoxCeleb1-O/E/H trial lists;
 3. speaker-level sex annotation file for subgroup evaluation.
 
-Example trial-list and metadata formats are provided in:
+Example file formats are provided in:
 
 ```text
 examples/
@@ -130,13 +144,13 @@ The evaluation reports:
 
 - EER;
 - minDCF;
-- FMR/FNMR at a fixed global FMR operating point;
+- FMR/FNMR at a fixed global operating point;
 - sex-disaggregated FMR/FNMR;
 - GARBE fairness metrics.
 
 ---
 
-## Training the final Fair-Gate configuration
+## Training the Final Fair-Gate Configuration
 
 ```bash
 TRAIN_LIST=/path/to/voxceleb2_train_list.txt \
@@ -148,7 +162,7 @@ CUDA_VISIBLE_DEVICES=0 \
 bash scripts/training/train_fairgate_r005.sh
 ```
 
-The final configuration is also stored in:
+The final configuration is stored in:
 
 ```text
 configs/fairgate_r005.yaml
@@ -157,7 +171,7 @@ configs/fairgate_r005_best_args.txt
 
 ---
 
-## Ablation recipes
+## Ablation Recipes
 
 The main ablation scripts are provided under:
 
@@ -165,19 +179,7 @@ The main ablation scripts are provided under:
 recipes/stage1_ablation/
 ```
 
-Key components:
-
-| Name | Argument | Meaning |
-|---|---|---|
-| Cap | `--lambda_css_cap` | capacity regularization for complementary gating |
-| Sat | `--lambda_css_sat` | gate saturation regularization |
-| Gs | `--lambda_gender_s` | sex supervision on the sensitive branch |
-| Adv | `--lambda_gender_adv` | adversarial sex removal from the identity branch |
-| Dec | `--lambda_decor` | decorrelation regularization between identity and sensitive branches |
-| REx | `--lambda_rex` | Risk Extrapolation penalty across sex groups |
-| r | `--css_target_ratio` | target ratio for the sensitive branch |
-
-See `docs/ablation_naming.md` for the full mapping between experiment IDs and components.
+See `docs/ablation_naming.md` for the mapping between experiment IDs and model components.
 
 ---
 
