@@ -1,0 +1,1 @@
+/path/to/VoxCeleb2/dev/aac/id03728/xxx/00001.wav

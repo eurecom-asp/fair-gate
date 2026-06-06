@@ -1,0 +1,25 @@
+model:
+  backbone: ecapa_tdnn
+  channels: 1024
+  n_class: 5994
+
+training:
+  max_epoch: 50
+  batch_size: 400
+  lr: 0.001
+  lr_decay: 1.0
+  test_step: 1
+
+fairgate:
+  baseline: false
+  lambda_css_cap: 1.0
+  lambda_css_sat: 1.0
+  lambda_gender_s: 1.0
+  lambda_gender_adv: 1.0
+  lambda_decor: 0.0
+  lambda_rex: 0.0
+  css_target_ratio: 0.05
+
+evaluation:
+  fixed_fmr: 0.01
+  print_metric_line: true

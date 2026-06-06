@@ -1,0 +1,117 @@
+
+# train.py
+FUNC  seed_everything
+FUNC  is_dist
+FUNC  get_rank
+FUNC  get_world_size
+FUNC  barrier
+FUNC  _env_rank
+FUNC  master_print
+FUNC  parse_bool
+FUNC  infer_spk_from_path
+FUNC  resolve_wav
+FUNC  parse_gender
+FUNC  init_ddp
+FUNC  cleanup_ddp
+CLASS VoxTrainDataset
+  METHOD __init__
+  METHOD __len__
+  METHOD _load_wav
+  METHOD _random_crop
+  METHOD __getitem__
+FUNC  collate_train
+FUNC  read_trials
+FUNC  embed_all
+FUNC  score_trials
+FUNC  eval_one_protocol
+FUNC  _strip_module_prefix
+FUNC  load_ckpt
+FUNC  save_ckpt
+FUNC  load_pretrained_ecapa
+FUNC  main
+
+# fair_utils.py
+FUNC  temporarily_eval
+CLASS _GradReverse
+  METHOD forward
+  METHOD backward
+CLASS GradientReversal
+  METHOD __init__
+  METHOD forward
+FUNC  warmup_scale
+CLASS FairConfig
+CLASS CausalGate
+  METHOD __init__
+  METHOD forward
+CLASS GenderHead
+  METHOD __init__
+  METHOD forward
+FUNC  css_capacity_loss
+FUNC  css_saturation_loss
+FUNC  decorrelation_loss
+FUNC  rex_penalty
+FUNC  compute_eer
+FUNC  compute_minDCF
+FUNC  pick_tau_at_fmr
+FUNC  err_rates
+FUNC  garbe
+FUNC  group_eer
+
+# ECAPAModel.py
+CLASS ECAPAModel
+  METHOD __init__
+  METHOD train_network
+  METHOD _embed_file
+  METHOD _read_list
+  METHOD eval_network
+  METHOD save_parameters
+  METHOD load_parameters
+
+# ecapa_fair_model.py
+CLASS ECAPAFairModel
+  METHOD __init__
+  METHOD fair_enabled
+  METHOD _encode
+  METHOD extract_embedding
+  METHOD _split
+  METHOD training_step
+  METHOD state_dict_with_meta
+  METHOD load_state_dict_safely
+
+# model.py
+CLASS SEModule
+  METHOD __init__
+  METHOD forward
+CLASS Bottle2neck
+  METHOD __init__
+  METHOD forward
+CLASS PreEmphasis
+  METHOD __init__
+  METHOD forward
+CLASS FbankAug
+  METHOD __init__
+  METHOD mask_along_axis
+  METHOD forward
+CLASS ECAPA_TDNN
+  METHOD __init__
+  METHOD forward
+
+# loss.py
+CLASS AAMsoftmax
+  METHOD __init__
+  METHOD forward
+
+# dataLoader.py
+CLASS train_loader
+  METHOD __init__
+  METHOD __getitem__
+  METHOD __len__
+  METHOD add_rev
+  METHOD add_noise
+
+# tools.py
+FUNC  init_args
+FUNC  tuneThresholdfromScore
+FUNC  ComputeErrorRates
+FUNC  ComputeMinDcf
+FUNC  accuracy

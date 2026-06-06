@@ -1,0 +1,2 @@
+[CKPT] load=/medias/speech/projects/quy/ECAPA-TDNN-all/ECAPA-TDNN-ori/ECAPA-TDNN/exps/_two_stage/G1/stage1_ablation_more/S17_MAIN_r005/models/model_0030.pt missing=0 unexpected=0
+[EVAL] protocols=3 fixed_fmr=0.01

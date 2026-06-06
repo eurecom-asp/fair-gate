@@ -1,0 +1,1 @@
+--css_target_ratio 0.01 --lambda_css_cap 0.005 --lambda_css_sat 0.001 --lambda_gender_s 0.05 --lambda_gender_adv 0.002 --grl_warmup_epochs 8 --adv_warmup_epochs 8

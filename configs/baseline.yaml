@@ -1,0 +1,7 @@
+model:
+  backbone: ecapa_tdnn
+  channels: 1024
+  n_class: 5994
+
+fairgate:
+  baseline: true
